@@ -55,7 +55,7 @@ def iniciar_escaneo():
         print("Densidad baja: Buscando otra zona.")
 
 iniciar_escaneo()
-        
+
 def perforar():
     profundidad = 0
     while profundidad <= 10:
@@ -65,7 +65,7 @@ def perforar():
     print("Proceso de perforación finalizado")
 
 perforar()
-        
+
 def verificar_visibilidad():
     cielo = input("Intruducir como esta el cielo (despejado o con tormenta): ")
     return cielo
@@ -92,55 +92,8 @@ navegar_a_base()</code></pre>
         <div class="panel">
             <h2>💻 Consola Interactiva (Ejecución en Vivo)</h2>
             <div class="consola-box">
-                <!-- Código ejecutable por PyScript -->
-                <script type="py" terminal>
-import random
-import time
-
-def analizar_densidad():
-    numero = random.randint(1, 100)
-    return numero
-
-def iniciar_escaneo():
-    resultado = analizar_densidad()
-    if resultado >= 50:
-        print("Densidad alta: Iniciando excavación")
-    else:
-        print("Densidad baja: Buscando otra zona.")
-
-iniciar_escaneo()
-
-def perforar():
-    profundidad = 0
-    while profundidad <= 10:
-        profundidad = profundidad + 1
-        print("Perforando.. metros actuales:" + str(profundidad))
-        
-    print("Proceso de perforación finalizado")
-
-perforar()
-
-def verificar_visibilidad():
-    cielo = input("Intruducir como esta el cielo (despejado o con tormenta): ")
-    return cielo
-
-def navegar_a_base():
-    kilometros_recorridos = 0 
-    objetivo = 3
-    print("Iniciando sistema de navegación automática...")
-    while kilometros_recorridos < objetivo:
-        respuesta_c = verificar_visibilidad()
-        if respuesta_c == "despejado":
-            kilometros_recorridos = kilometros_recorridos + 1
-            print("Avanzando…")
-            time.sleep(0.5)
-        else:
-            print("Tormenta detectada, esperando...")
-            time.sleep(0.5)
-    print("¡Misión cumplida! El Rover ha llegado a la base a salvo.")
-
-navegar_a_base()
-                </script>
+                <!-- Se ejecuta main.py con Web Worker para dar soporte a input() -->
+                <script type="py" src="main.py" terminal worker></script>
             </div>
         </div>
     </div>
