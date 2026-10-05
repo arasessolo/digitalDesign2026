@@ -60,7 +60,7 @@ st.markdown("""
             border-top: 2px solid #995F2F;
         }
     </style>
-""", unsafe_allow_allow_html=True)
+""", unsafe_allow_html=True)
 
 # ---------------------------------------------------------
 # INICIALIZACIÓN DEL ESTADO DE SESIÓN (st.session_state)
