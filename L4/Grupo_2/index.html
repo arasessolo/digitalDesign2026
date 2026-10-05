@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema del Rover - L4</title>
     
-    <!-- Librerías de PyScript -->
+    <!-- Librerías oficiales de PyScript (MicroPython) -->
     <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css">
     <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
 
@@ -36,13 +36,12 @@
             border-radius: 8px; 
             padding: 20px; 
             border: 1px solid #334155; 
-            min-width: 0; /* Previene que el grid se expanda si el contenido es ancho */
+            min-width: 0;
             width: 100%;
         }
         
         h2 { color: #38bdf8; margin-bottom: 15px; font-size: 1.2rem; }
 
-        /* Estilo para el código */
         pre { 
             background-color: #090d16; 
             padding: 15px; 
@@ -55,23 +54,23 @@
             width: 100%;
         }
 
-        /* Estilo para contener la consola sin que se desborde */
         .consola-box { 
             background-color: #000000; 
             border-radius: 6px; 
-            min-height: 500px; 
+            height: 500px; 
             border: 1px solid #22c55e; 
             width: 100%;
             max-width: 100%;
             overflow: hidden;
         }
 
-        /* Fuerza a la terminal de PyScript a adaptarse al ancho de la caja */
+        /* Ajuste estricto del ancho de la terminal */
         .consola-box py-terminal, 
+        .consola-box mpy-terminal,
         .consola-box .py-terminal { 
             width: 100% !important; 
             max-width: 100% !important; 
-            height: 500px !important;
+            height: 100% !important;
             overflow: hidden !important;
         }
     </style>
@@ -138,8 +137,8 @@ navegar_a_base()</code></pre>
         <div class="panel">
             <h2>💻 Consola Interactiva (Ejecución en Vivo)</h2>
             <div class="consola-box">
-                <!-- Se incluye el código directamente para garantizar compatibilidad sin servidor y funcional con input() -->
-                <script type="py" terminal worker>
+                <!-- script con MicroPython (mpy) para máxima compatibilidad y velocidad en GitHub Pages -->
+                <script type="mpy" terminal>
 import random
 import time
 
