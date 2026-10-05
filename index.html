@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galería de Trabajos de Alumnos</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            max-width: 900px; 
+            margin: 0 auto; 
+            padding: 40px 20px; 
+            line-height: 1.6; 
+            background-color: #f4f6f9;
+            color: #333;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            color: #1a252f;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        /* Secciones por Cursos */
+        .seccion-curso {
+            margin-bottom: 40px;
+        }
+
+        .header-curso {
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e1e8ed;
+            padding-bottom: 8px;
+        }
+
+        .titulo-curso {
+            display: inline-block;
+            font-size: 1.4rem;
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            margin-bottom: 4px;
+        }
+
+        .subtitulo-curso {
+            font-size: 0.95rem;
+            color: #7f8c8d;
+            font-style: italic;
+        }
+
+        /* Grilla de Tarjetas */
+        .grid-alumnos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            list-style: none;
+            padding: 0;
+        }
+
+        .card {
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e1e8ed;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            margin-bottom: 12px;
+        }
+
+        .card-header a { 
+            text-decoration: none; 
+            color: #2980b9; 
+            font-weight: bold; 
+            font-size: 1.2rem; 
+            display: inline-block;
+        }
+
+        .card-header a:hover { 
+            color: #16a085; 
+            text-decoration: underline; 
+        }
+
+        .tag-curso {
+            display: inline-block;
+            background-color: #e8f4fc;
+            color: #2980b9;
+            font-size: 0.8rem;
+            font-weight: bold;
+            padding: 3px 8px;
+            border-radius: 12px;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+
+        .card-descripcion {
+            font-size: 0.95rem;
+            color: #555;
+        }
+
+        .proximamente {
+            color: #95a5a6;
+            font-size: 0.95rem;
+            background: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px dashed #ccc;
+            text-align: center;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 0.9rem;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Digital Design - 2026</h1>
+        <p>A continuación, se presentan los proyectos desarrollados por los alumnos a lo largo del año, organizados por curso y división.</p>
+    </header>
+
+    <!-- SECCIÓN L2 -->
+    <section class="seccion-curso">
+        <div class="header-curso">
+            <h2 class="titulo-curso">L2 - 1er año</h2>
+            <p class="subtitulo-curso">Enfoque: Creación de páginas web (HTML & CSS)</p>
+        </div>
+        
+        <ul class="grid-alumnos">
+            <li class="card">
+                <div>
+                    <div class="card-header">
+                        <a href="L2/Trabajo Alumno 3/index.html">Navarro Cox y Lloveras Lemos</a>
+                        <span class="tag-curso">1A</span>
+                    </div>
+                    <p class="card-descripcion">
+                        Crearon una página web desde cero utilizando Inteligencia Artificial para generar textos e imágenes con el fin de presentar la escuela <em>"Aprender hoy para transformar el mañana"</em>.
+                    </p>
+                </div>
+            </li>
+
+            <li class="card">
+                <div>
+                    <div class="card-header">
+                        <a href="L2/Trabajo Alumno 1/index.html">De la Serna</a>
+                        <span class="tag-curso">1D</span>
+                    </div>
+                    <p class="card-descripcion">
+                        Diseñó una página web destinada a comunicar y recomendar las mejores series y películas de la historia.
+                    </p>
+                </div>
+            </li>
+
+            <li class="card">
+                <div>
+                    <div class="card-header">
+                        <a href="L2/Trabajo Alumno 2/index.html">Castillo</a>
+                        <span class="tag-curso">1D</span>
+                    </div>
+                    <p class="card-descripcion">
+                        Desarrolló un sitio web para presentar las principales características e información del juego de PlayStation <em>Forza 6</em>.
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </section>
+
+    <!-- SECCIÓN L3 -->
+    <section class="seccion-curso">
+        <div class="header-curso">
+            <h2 class="titulo-curso">L3 - 2do año</h2>
+            <p class="subtitulo-curso">Enfoque: Data Analytics</p>
+        </div>
+        
+        <ul class="grid-alumnos">
+            <li class="card">
+                <div>
+                    <div class="card-header">
+                        <a href="L3/Grupo 1/index.html">Sanmiguel, Silva y Langlet</a>
+                        <span class="tag-curso">2D</span>
+                    </div>
+                    <p class="card-descripcion">
+                        Realizaron una encuesta para evaluar el impacto de la moda en el medioambiente y construyeron un dashboard interactivo para comunicar sus hallazgos. Para lograrlo, crearon y aplicaron la encuesta, limpiaron los datos, construyeron diagramas de relación, trabajaron con tablas dinámicas, gráficos e identificaron insights clave.
+                    </p>
+                </div>
+            </li>
+            <li class="card">
+                <div>
+                    <div class="card-header">
+                        <a href="L3/Grupo 2/index.html">Bonofiglio, Machado y Fitte</a>
+                        <span class="tag-curso">2D</span>
+                    </div>
+                    <p class="card-descripcion">
+                        Realizaron un informe analítico y dashboard visual que evalúa la relación entre la carga deportiva extraescolar, la flexibilidad académica y las prioridades de los estudiantes, estructurado con métricas y gráficos estadísticos.
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </section>
+
+    <!-- SECCIÓN L4 -->
+    <section class="seccion-curso">
+        <div class="header-curso">
+            <h2 class="titulo-curso">L4 - 3er año</h2>
+            <p class="subtitulo-curso">Enfoque: Programación con Python</p>
+        </div>
+        <ul class="grid-alumnos">
+            <li class="card">
+                <div>
+                    <div class="card-header">
+                        <a href="L4/Grupo 1/index.html">Tolosa</a>
+                        <span class="tag-curso">3A</span>
+                    </div>
+                    <p class="card-descripcion">
+                        Desarrollo de un menú interactivo en Python con dos minijuegos (Adivinar el número y Batalla), estructurado mediante funciones, manejo de variables, condicionales y ciclos de repetición.
+                    </p>
+                </div>
+            </li>
+            <li class="card">
+                <div>
+                    <div class="card-header">
+                        <a href="L4/Grupo 2/index.html">Cottone</a>
+                        <span class="tag-curso">3C</span>
+                    </div>
+                    <p class="card-descripcion">
+                        Simulación en Python para la automatización de un Rover de exploración, implementando lectura de sensores, algoritmos de perforación y navegación guiada por condiciones climáticas.
+                    </p>
+                </div>
+            </li>
+           
+        </ul>
+    </section>
+
+    <!-- SECCIÓN L5 -->
+    <section class="seccion-curso">
+        <div class="header-curso">
+            <h2 class="titulo-curso">L5 - 4to año</h2>
+            <p class="subtitulo-curso">Enfoque: Desarrollo con Python y Streamlit</p>
+        </div>
+        <ul class="grid-alumnos">
+            <li class="card">
+                <div>
+                    <div class="card-header">
+                        <a href="L5/Grupo 1/index.html">Di Benedetto, Day y Della Giustina</a>
+                        <span class="tag-curso">4A</span>
+                    </div>
+                    <p class="card-descripcion">
+                        Panel de control interactivo para directores técnicos que permite registrar futbolistas, asignar puntuaciones por rendimiento, administrar listas de espera de fichajes y visualizar métricas clave en tiempo real.
+                    </p>
+                </div>
+            </li>
+            <li class="card">
+                <div>
+                    <div class="card-header">
+                        <a href="L5/Grupo 2/">Cormenzana y Delorenzi</a>
+                        <span class="tag-curso">4B</span>
+                    </div>
+                    <p class="card-descripcion">
+                        Aplicación web estilo Spotify desarrollada con Streamlit, enfocada en la gestión de catálogos musicales, cola de reproducción interactiva, métricas de popularidad (KPIs) e interfaz personalizada con CSS.
+                    </p>
+                </div>
+            </li>
+            <li class="card">
+                <div>
+                    <div class="card-header">
+                        <a href="L5/Grupo 2/">De Foronda y García Mansilla</a>
+                        <span class="tag-curso">4B</span>
+                    </div>
+                    <p class="card-descripcion">
+                        Aplicación web en Streamlit para la gestión integral de un refugio de animales, que incluye padrón de mascotas, historial de vacunación, validación de aptos para adopción y lista de espera de adoptantes.
+                    </p>
+                </div>
+            </li>
+            
+        </ul>
+    </section>
+
+    <footer>
+        <p>Proyectos 2026</p>
+    </footer>
+
+</body>
+</html>

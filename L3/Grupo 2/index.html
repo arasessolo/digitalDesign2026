@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Deportistas Menores</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Font Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        dashBg: '#F3F4F6',
+                        dashNavy: '#1E293B',
+                        dashBlue: '#2563EB',
+                        dashCyan: '#06B6D4',
+                        dashOrange: '#F97316',
+                        dashEmerald: '#10B981'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #d7e1f7;
+            font-family: 'Inter', sans-serif;
+            color: #1E293B;
+        }
+        .card-shadow {
+            box-shadow: 0 4px 15px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            height: 240px;
+        }
+       /* Barra superior para volver al menú principal */
+        .header-volver {
+            height: 45px;
+            background-color: #121358;
+            color: white;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            border-radius: 20px;
+        }
+        .header-volver a {
+            color: #90c3cd;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        .header-volver a:hover {
+            text-decoration: underline;
+        }
+        /* Contenedor responsivo para el iframe */
+        .app-container {
+            width: 100%;
+            height: calc(100vh - 45px);
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <!-- Botón para regresar al menú general de alumnos -->
+    <div class="header-volver">
+        <a href="../../index.html">← Volver a la Galería de Trabajos</a>
+    </div>
+
+    <div class="max-w-7xl mx-auto space-y-8">
+        
+        <!-- Header Section -->
+        <header class="bg-white rounded-2xl p-6 md:p-8 card-shadow border border-gray-100 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+            <div class="space-y-2">
+                <div class="flex items-center gap-3">
+                    <span class="bg-blue-50 text-dashBlue p-2.5 rounded-xl font-bold text-lg">
+                        <i class="fa-solid fa-person-running"></i>
+                    </span>
+                    <span class="text-xs font-bold tracking-wider uppercase text-dashBlue bg-blue-50 px-3 py-1 rounded-full">Análisis del impacto del deporte en lo académico</span>
+                </div>
+                <h1 class="text-2xl md:text-3xl font-extrabold text-gray-900">Informe & Dashboard: Alumnos Deportistas</h1>
+                <p class="text-gray-500 text-sm md:text-base">Análisis de rendimiento, flexibilidad escolar y carga deportiva fuera del colegio.</p>
+            </div>
+            
+            <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 text-right w-full md:w-auto">
+                <span class="text-xs font-semibold text-gray-500 block">MUESTRA ANALIZADA</span>
+                <span class="text-3xl font-black text-dashBlue">N = 40</span>
+                <span class="text-xs text-gray-500 block">Estudiantes Encuestados</span>
+            </div>
+        </header>
+
+        <!-- Key Metrics Banner (4 Tarjetas KPI) -->
+        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="bg-white p-5 rounded-2xl card-shadow border border-gray-100 flex items-center gap-4">
+                <div class="w-12 h-12 rounded-xl bg-blue-50 text-dashBlue flex items-center justify-center text-xl font-bold">
+                    <i class="fa-solid fa-dumbbell"></i>
+                </div>
+                <div>
+                    <p class="text-xs font-semibold text-gray-500">Entrena Fuera del Colegio</p>
+                    <h3 class="text-2xl font-bold text-gray-900">97.5%</h3>
+                    <p class="text-xs text-dashBlue font-medium mt-0.5">39 de 40 alumnos</p>
+                </div>
+            </div>
+
+            <div class="bg-white p-5 rounded-2xl card-shadow border border-gray-100 flex items-center gap-4">
+                <div class="w-12 h-12 rounded-xl bg-orange-50 text-dashOrange flex items-center justify-center text-xl font-bold">
+                    <i class="fa-solid fa-trophy"></i>
+                </div>
+                <div>
+                    <p class="text-xs font-semibold text-gray-500">Compite en Torneos</p>
+                    <h3 class="text-2xl font-bold text-gray-900">80.0%</h3>
+                    <p class="text-xs text-dashOrange font-medium mt-0.5">Participación activa</p>
+                </div>
+            </div>
+
+            <div class="bg-white p-5 rounded-2xl card-shadow border border-gray-100 flex items-center gap-4">
+                <div class="w-12 h-12 rounded-xl bg-emerald-50 text-dashEmerald flex items-center justify-center text-xl font-bold">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <div>
+                    <p class="text-xs font-semibold text-gray-500">Prioriza los Estudios</p>
+                    <h3 class="text-2xl font-bold text-gray-900">55.0%</h3>
+                    <p class="text-xs text-dashEmerald font-medium mt-0.5">Responsabilidad académica</p>
+                </div>
+            </div>
+
+            <div class="bg-white p-5 rounded-2xl card-shadow border border-gray-100 flex items-center gap-4">
+                <div class="w-12 h-12 rounded-xl bg-cyan-50 text-dashCyan flex items-center justify-center text-xl font-bold">
+                    <i class="fa-solid fa-hand-holding-hand"></i>
+                </div>
+                <div>
+                    <p class="text-xs font-semibold text-gray-500">Solicita Flexibilidad</p>
+                    <h3 class="text-2xl font-bold text-gray-900">67.5%</h3>
+                    <p class="text-xs text-dashCyan font-medium mt-0.5">A favor de cambios</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- BLOQUE 1: Carga Deportiva, Competencia y Riesgos -->
+        <section class="space-y-4">
+            <div class="flex items-center gap-3 border-b border-gray-200 pb-3">
+                <span class="w-3 h-8 bg-dashBlue rounded-full"></span>
+                <div>
+                    <h2 class="text-xl font-bold text-gray-900">Bloque 1: Perfil Deportivo, Competencia y Riesgos</h2>
+                    <p class="text-xs text-gray-500">Dedicación semanal, torneos, prioridades y consecuencias de la rigidez.</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Gráfico 1: Dedicación Deportiva Semanal -->
+                <div class="bg-white p-6 rounded-2xl card-shadow border border-gray-100">
+                    <h3 class="font-bold text-gray-800 text-base mb-1"><i class="fa-regular fa-clock text-dashBlue mr-2"></i>Dedicación Semanal (Hrs/Semana)</h3>
+                    <p class="text-xs text-gray-500 mb-3 text-center">Promedio estimado: <strong>~4.7 horas</strong> fuera del colegio.</p>
+                    <div class="chart-container">
+                        <canvas id="chartDedicacion"></canvas>
+                    </div>
+                </div>
+
+                <!-- Gráfico 2: Participación en Torneos -->
+                <div class="bg-white p-6 rounded-2xl card-shadow border border-gray-100">
+                    <h3 class="font-bold text-gray-800 text-base mb-1"><i class="fa-solid fa-award text-dashOrange mr-2"></i>Participación en Torneos</h3>
+                    <p class="text-xs text-gray-500 mb-3 text-center">Alta competitividad que demanda tiempo e itinerario.</p>
+                    <div class="chart-container">
+                        <canvas id="chartTorneos"></canvas>
+                    </div>
+                </div>
+
+                <!-- Gráfico 3: Prioridad Percibida -->
+                <div class="bg-white p-6 rounded-2xl card-shadow border border-gray-100">
+                    <h3 class="font-bold text-gray-800 text-base mb-1"><i class="fa-solid fa-scale-balanced text-dashEmerald mr-2"></i>¿Estudiar o Entrenar?</h3>
+                    <p class="text-xs text-gray-500 mb-3 text-center">Percepción del pilar principal en su formación.</p>
+                    <div class="chart-container">
+                        <canvas id="chartPrioridad"></canvas>
+                    </div>
+                </div>
+
+                <!-- Gráfico 4: Riesgos si no entrena lo suficiente -->
+                <div class="bg-white p-6 rounded-2xl card-shadow border border-gray-100 lg:col-span-3">
+                    <h3 class="font-bold text-gray-800 text-base mb-1"><i class="fa-solid fa-triangle-exclamation text-red-500 mr-2"></i>Riesgos Percibidos si no Entrena lo Suficiente</h3>
+                    <p class="text-xs text-gray-500 mb-3">Impacto negativo reportado si se recorta el entrenamiento por exigencias rígidas.</p>
+                    <div class="chart-container">
+                        <canvas id="chartRiesgos"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BLOQUE 2: Gestión Académica y Propuestas de Apoyo -->
+        <section class="space-y-4 pt-4">
+            <div class="flex items-center gap-3 border-b border-gray-200 pb-3">
+                <span class="w-3 h-8 bg-dashOrange rounded-full"></span>
+                <div>
+                    <h2 class="text-xl font-bold text-gray-900">Bloque 2: Gestión Académica y Propuestas de Apoyo</h2>
+                    <p class="text-xs text-gray-500">Ausentismo escolar, estrategia de recuperación y apoyo solicitado.</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Gráfico 5: Faltas Semanales -->
+                <div class="bg-white p-6 rounded-2xl card-shadow border border-gray-100">
+                    <h3 class="font-bold text-gray-800 text-base mb-1"><i class="fa-solid fa-calendar-xmark text-dashOrange mr-2"></i>Faltas Semanales al Colegio</h3>
+                    <p class="text-xs text-gray-500 mb-3 text-center">Compromiso: El 72.5% mantiene un ausentismo nulo (0 hrs).</p>
+                    <div class="chart-container">
+                        <canvas id="chartFaltas"></canvas>
+                    </div>
+                </div>
+
+                <!-- Gráfico 6: Recuperación de Tareas -->
+                <div class="bg-white p-6 rounded-2xl card-shadow border border-gray-100">
+                    <h3 class="font-bold text-gray-800 text-base mb-1"><i class="fa-solid fa-book-open-reader text-dashBlue mr-2"></i>¿Cómo recuperan las tareas?</h3>
+                    <p class="text-xs text-gray-500 mb-3 text-center">Estrategias autónomas de nivelación de contenidos.</p>
+                    <div class="chart-container">
+                        <canvas id="chartRecuperacion"></canvas>
+                    </div>
+                </div>
+
+                <!-- Gráfico 7: Flexibilidad de Horarios -->
+                <div class="bg-white p-6 rounded-2xl card-shadow border border-gray-100">
+                    <h3 class="font-bold text-gray-800 text-base mb-1"><i class="fa-solid fa-thumbs-up text-dashCyan mr-2"></i>Aprobación de Flexibilidad</h3>
+                    <p class="text-xs text-gray-500 mb-3 text-center">Clara mayoría a favor de adaptar los esquemas horarios.</p>
+                    <div class="chart-container">
+                        <canvas id="chartFlexibilidad"></canvas>
+                    </div>
+                </div>
+
+                <!-- Gráfico 8: Apoyo Solicitado a Escuelas -->
+                <div class="bg-white p-6 rounded-2xl card-shadow border border-gray-100 lg:col-span-3">
+                    <h3 class="font-bold text-gray-800 text-base mb-1"><i class="fa-solid fa-school-flag text-dashBlue mr-2"></i>Apoyo Solicitado a las Escuelas</h3>
+                    <p class="text-xs text-gray-500 mb-3">Medidas prioritarias requeridas para sostener el desempeño deportivo y escolar.</p>
+                    <div class="chart-container">
+                        <canvas id="chartApoyo"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BLOQUE 3: Conclusiones Ejecutivas -->
+        <section class="bg-slate-900 text-white p-6 md:p-8 rounded-2xl card-shadow space-y-6">
+            <div class="flex items-center gap-3 border-b border-slate-700 pb-4">
+                <span class="bg-dashBlue p-2 rounded-lg text-white">
+                    <i class="fa-solid fa-lightbulb"></i>
+                </span>
+                <h2 class="text-xl font-bold">Conclusiones Clave del Estudio</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-slate-800/60 p-5 rounded-xl border border-slate-700/50">
+                    <div class="flex items-center gap-2 text-dashCyan font-bold mb-2">
+                        <i class="fa-solid fa-user-check"></i>
+                        <h4>Compromiso y Disciplina</h4>
+                    </div>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Los alumnos priorizan la educación (<strong>55%</strong>) y demuestran responsabilidad recuperando contenidos por cuenta propia (<strong>45%</strong>), pero enfrentan cargas semanales de hasta 8 horas de entrenamiento adicional.
+                    </p>
+                </div>
+
+                <div class="bg-slate-800/60 p-5 rounded-xl border border-slate-700/50">
+                    <div class="flex items-center gap-2 text-dashOrange font-bold mb-2">
+                        <i class="fa-solid fa-heart-pulse"></i>
+                        <h4>Riesgo de Desrendimiento</h4>
+                    </div>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        El <strong>50%</strong> advierte un impacto directo en su rendimiento físico y un <strong>20%</strong> en riesgos de lesiones si deben recortar horas de entrenamiento debido a rigideces académicas.
+                    </p>
+                </div>
+
+                <div class="bg-slate-800/60 p-5 rounded-xl border border-slate-700/50">
+                    <div class="flex items-center gap-2 text-dashEmerald font-bold mb-2">
+                        <i class="fa-solid fa-compass-drafting"></i>
+                        <h4>Ruta de Acción Institucional</h4>
+                    </div>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Las soluciones más valiosas no implican bajar la exigencia, sino otorgar un marco de flexibilidad administrativa: justificación formal de faltas por competencias (<strong>45%</strong>) y margen de entregas/exámenes (<strong>50% combinado</strong>).
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-center text-xs text-gray-400 py-4">
+            <p>Digital Design - 2026</p>
+        </footer>
+
+    </div>
+
+    <!-- Scripts de inicialización de Chart.js -->
+    <script>
+        const COLOR_BLUE = '#2563EB';
+        const COLOR_CYAN = '#06B6D4';
+        const COLOR_ORANGE = '#F97316';
+        const COLOR_EMERALD = '#10B981';
+        const COLOR_RED = '#EF4444';
+        const COLOR_SLATE = '#64748B';
+
+        // 1. Dedicación Semanal
+        new Chart(document.getElementById('chartDedicacion'), {
+            type: 'bar',
+            data: {
+                labels: ['5 Hrs', '3 Hrs', '4 Hrs', '8 Hrs', '2,6,7 Hrs (c/u)', '1 Hr'],
+                datasets: [{
+                    data: [20.0, 17.5, 15.0, 12.5, 10.0, 5.0],
+                    backgroundColor: COLOR_BLUE,
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: { y: { ticks: { callback: v => v + '%' } } }
+            }
+        });
+
+        // 2. Participación en Torneos
+        new Chart(document.getElementById('chartTorneos'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Sí', 'A veces', 'No', 'Casi siempre'],
+                datasets: [{
+                    data: [55.0, 25.0, 17.5, 2.5],
+                    backgroundColor: [COLOR_ORANGE, '#FDBA74', '#E2E8F0', '#C2410C']
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { position: 'bottom' } }
+            }
+        });
+
+        // 3. Prioridad
+        new Chart(document.getElementById('chartPrioridad'), {
+            type: 'pie',
+            data: {
+                labels: ['Estudiar', 'Entrenar'],
+                datasets: [{
+                    data: [55.0, 45.0],
+                    backgroundColor: [COLOR_EMERALD, COLOR_BLUE]
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { position: 'bottom' } }
+            }
+        });
+
+        // 4. Riesgos
+        new Chart(document.getElementById('chartRiesgos'), {
+            type: 'bar',
+            data: {
+                labels: ['Bajo rendimiento físico', 'Riesgo de lesiones', 'Menor avance internacional', 'Afectar al equipo / Otro'],
+                datasets: [{
+                    data: [50.0, 20.0, 20.0, 10.0],
+                    backgroundColor: [COLOR_RED, '#F87171', COLOR_ORANGE, COLOR_SLATE],
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: { x: { ticks: { callback: v => v + '%' } } }
+            }
+        });
+
+        // 5. Faltas Semanales
+        new Chart(document.getElementById('chartFaltas'), {
+            type: 'bar',
+            data: {
+                labels: ['0 hrs (No falta)', '5 hrs/sem', '1 a 2 hrs', '3 a 4 hrs'],
+                datasets: [{
+                    data: [72.5, 10.0, 10.0, 7.5],
+                    backgroundColor: [COLOR_EMERALD, COLOR_ORANGE, COLOR_BLUE, COLOR_CYAN],
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: { y: { ticks: { callback: v => v + '%' } } }
+            }
+        });
+
+        // 6. Recuperación de Tareas
+        new Chart(document.getElementById('chartRecuperacion'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Estudiar después', 'Consultar compañeros', 'Fin de semana', 'Prof. particular', 'No hacerlas/Copiar/Otro'],
+                datasets: [{
+                    data: [45.0, 17.5, 15.0, 7.5, 15.0],
+                    backgroundColor: [COLOR_BLUE, COLOR_CYAN, COLOR_EMERALD, COLOR_ORANGE, COLOR_SLATE]
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } } }
+            }
+        });
+
+        // 7. Flexibilidad
+        new Chart(document.getElementById('chartFlexibilidad'), {
+            type: 'pie',
+            data: {
+                labels: ['A FAVOR', 'EN CONTRA'],
+                datasets: [{
+                    data: [67.5, 32.5],
+                    backgroundColor: [COLOR_CYAN, '#CBD5E1']
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { position: 'bottom' } }
+            }
+        });
+
+        // 8. Apoyo Solicitado
+        new Chart(document.getElementById('chartApoyo'), {
+            type: 'bar',
+            data: {
+                labels: ['No contabilizar faltas deportivas', 'Tiempo extra para entregas', 'Cambio de fechas de exámenes', 'Apoyo académico extra'],
+                datasets: [{
+                    data: [45.0, 30.0, 20.0, 5.0],
+                    backgroundColor: COLOR_BLUE,
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: { x: { ticks: { callback: v => v + '%' } } }
+            }
+        });
+    </script>
+</body>
+</html>

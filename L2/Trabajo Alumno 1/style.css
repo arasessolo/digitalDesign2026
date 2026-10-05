@@ -1,0 +1,87 @@
+.Logo{
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+.ImagenLogo{
+    width: 50px;
+}
+body{
+    text-align: center;
+    color: white;
+    background-color: black;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.Imagen{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-left: 300px;
+    margin-right: 300px;
+}
+
+.descripcion{
+    margin-top: 100px;
+}
+.secciones{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin: 50px;
+    padding: 10px;
+    
+}
+
+.secciones div{
+    border: 1px solid #333;
+    border-radius: 30px;
+}
+
+.redemption{
+    width: 300px;
+    height: 170px;
+}
+.ElPadrino{
+    width: 300px;
+    height: 170px;
+}
+.Batman{
+    width: 300px;
+    height: 170px;
+}
+.walter{
+    width: 300px;
+}
+.got{
+    width: 300px
+}
+.detective{
+    width: 300px;
+}
+.asesino{
+    width: 300px;
+}
+.Secciones{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.video{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 30px;
+    margin-left: 100px;
+    margin-right: 200px;
+}
+
+.lista{
+    margin-left: 60px;
+    margin-right: 60px;
+}
+
+footer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 50px;
+    border-top: 1px solid #333;
+    padding-top: 20px;
+}

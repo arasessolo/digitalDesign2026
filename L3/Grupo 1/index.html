@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Impacto de la Moda y Conciencia Ambiental</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Font Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        ecoBg: '#F8F9FA',
+                        ecoGreen: {
+                            DEFAULT: '#2D5A27',
+                            light: '#437F3B',
+                            soft: '#EAF3E8'
+                        },
+                        ecoTerracotta: {
+                            DEFAULT: '#C86D51',
+                            soft: '#FBF0EC'
+                        },
+                        ecoMustard: {
+                            DEFAULT: '#E6B800',
+                            soft: '#FCF8E3'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #9ab999;
+            font-family: 'Inter', sans-serif;
+            color: #2D3748;
+        }
+        .card-shadow {
+            box-shadow: 0 4px 20px -2px rgba(45, 90, 39, 0.05), 0 2px 6px -1px rgba(0, 0, 0, 0.03);
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            height: 240px;
+        }
+        .chart-container-lg {
+            position: relative;
+            width: 100%;
+            height: 280px;
+        }
+        /* Barra superior para volver al menú principal */
+        .header-volver {
+            height: 45px;
+            background-color: #195b13;
+            color: white;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            border-radius: 20px;
+        }
+        .header-volver a {
+            color: #89cab0;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        .header-volver a:hover {
+            text-decoration: underline;
+        }
+        /* Contenedor responsivo para el iframe */
+        .app-container {
+            width: 100%;
+            height: calc(100vh - 45px);
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+    <!-- Botón para regresar al menú general de alumnos -->
+    <div class="header-volver">
+        <a href="../../index.html">← Volver a la Galería de Trabajos</a>
+    </div>
+
+    <div class="max-w-7xl mx-auto space-y-8">
+        
+        <!-- Header Section -->
+        <header class="bg-white rounded-2xl p-6 md:p-8 card-shadow border border-gray-100 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+            <div class="space-y-2">
+                <div class="flex items-center gap-3">
+                    <span class="bg-ecoGreen-soft text-ecoGreen p-2.5 rounded-xl font-bold text-lg">
+                        <i class="fa-solid fa-shirt"></i>
+                    </span>
+                    <span class="text-xs font-semibold tracking-wider uppercase text-ecoGreen bg-ecoGreen-soft px-3 py-1 rounded-full">Proyecto 2º Año</span>
+                </div>
+                <h1 class="text-2xl md:text-3xl font-bold text-gray-900">Dashboard: Impacto de la Moda y Consumo Consciente</h1>
+                <p class="text-gray-900 text-sm md:text-base">Análisis interactivo de hábitos, gestión de residuos y conciencia socioambiental escolar.</p>
+            </div>
+            
+            <!-- Filter / Controls -->
+            <div class="flex items-center gap-3 bg-ecoBg p-2 rounded-xl border border-gray-200 w-full md:w-auto">
+                <i class="fa-solid fa-filter text-gray-900 ml-2"></i>
+                <label for="cohortFilter" class="text-xs font-semibold text-gray-900">Filtrar por Segmente:</label>
+                <select id="cohortFilter" class="bg-white text-sm font-medium border border-gray-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-ecoGreen cursor-pointer w-full md:w-auto" onchange="updateDashboardData()">
+                    <option value="all">Toda la Comunidad (General)</option>
+                    <option value="frequent">Compradores Frecuentes (Semana/Mes)</option>
+                    <option value="infrequent">Compradores Ocasionales (Semestre/Año)</option>
+                </select>
+            </div>
+        </header>
+
+        <!-- Key Metrics Banner -->
+        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="bg-white p-5 rounded-2xl card-shadow border border-gray-100 flex items-center gap-4">
+                <div class="w-12 h-12 rounded-xl bg-ecoGreen-soft text-ecoGreen flex items-center justify-center text-xl font-bold">
+                    <i class="fa-solid fa-users"></i>
+                </div>
+                <div>
+                    <p class="text-xs font-medium text-gray-900">Muestra Analizada</p>
+                    <h3 id="statTotal" class="text-2xl font-bold text-gray-900">120</h3>
+                    <p class="text-xs text-ecoGreen font-medium mt-0.5"><i class="fa-solid fa-check"></i> Encuestas Completas</p>
+                </div>
+            </div>
+
+            <div class="bg-white p-5 rounded-2xl card-shadow border border-gray-100 flex items-center gap-4">
+                <div class="w-12 h-12 rounded-xl bg-ecoTerracotta-soft text-ecoTerracotta flex items-center justify-center text-xl font-bold">
+                    <i class="fa-solid fa-recycle"></i>
+                </div>
+                <div>
+                    <p class="text-xs font-medium text-gray-900">Tiraron Ropa en Buen Estado</p>
+                    <h3 id="statDiscard" class="text-2xl font-bold text-ecoTerracotta">28%</h3>
+                    <p class="text-xs text-ecoTerracotta font-medium mt-0.5"><i class="fa-solid fa-triangle-exclamation"></i> Oportunidad de Donación</p>
+                </div>
+            </div>
+
+            <div class="bg-white p-5 rounded-2xl card-shadow border border-gray-100 flex items-center gap-4">
+                <div class="w-12 h-12 rounded-xl bg-ecoMustard-soft text-ecoMustard flex items-center justify-center text-xl font-bold">
+                    <i class="fa-solid fa-droplet"></i>
+                </div>
+                <div>
+                    <p class="text-xs font-medium text-gray-900">Conciencia Huella Hídrica</p>
+                    <h3 id="statWater" class="text-2xl font-bold text-gray-900">64%</h3>
+                    <p class="text-xs text-gray-900 mt-0.5">Saben del gasto de agua</p>
+                </div>
+            </div>
+
+            <div class="bg-white p-5 rounded-2xl card-shadow border border-gray-100 flex items-center gap-4">
+                <div class="w-12 h-12 rounded-xl bg-ecoGreen-soft text-ecoGreen flex items-center justify-center text-xl font-bold">
+                    <i class="fa-solid fa-seedling"></i>
+                </div>
+                <div>
+                    <p class="text-xs font-medium text-gray-900">Dispuestos al Cambio</p>
+                    <h3 id="statChange" class="text-2xl font-bold text-ecoGreen">78%</h3>
+                    <p class="text-xs text-ecoGreen font-medium mt-0.5"><i class="fa-solid fa-arrow-trend-up"></i> Disposición Positiva</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- BLOCK 1: Patrones y Motivadores de Compra -->
+        <section class="space-y-4">
+            <div class="flex items-center gap-3 border-b border-gray-200 pb-3">
+                <span class="w-3 h-8 bg-ecoGreen rounded-full"></span>
+                <div>
+                    <h2 class="text-xl font-bold text-gray-900">Bloque 1: Patrones y Motivadores de Compra</h2>
+                    <p class="text-xs text-gray-900">Frecuencia, factores detonantes e impulsores del consumo de indumentaria.</p>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Chart 1: Frecuencia de Compra -->
+                <div class="bg-white p-6 rounded-2xl card-shadow border border-gray-100">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-semibold text-gray-800 text-base"><i class="fa-regular fa-calendar-check text-ecoGreen mr-2"></i>Frecuencia de Compra de Ropa</h3>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <canvas id="chart1"></canvas>
+                    </div>
+                    <p style="text-align: center;">Muestra cada cuánto tiempo los estudiantes adquieren nuevas prendas de vestir, distinguiendo entre hábitos de consumo continuo y compras periódicas u ocasionales.</p>
+                </div>
+
+                <!-- Chart 2: Factores Detonantes de Compra -->
+                <div class="bg-white p-6 rounded-2xl card-shadow border border-gray-100">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-semibold text-gray-800 text-base"><i class="fa-solid fa-bolt text-ecoGreen mr-2"></i>Factores Detonantes de Compra</h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="chart2"></canvas>
+                    </div>
+                    <p style="text-align: center;">Identifica los principales estímulos externos e internos que motivan la decisión de compra, como ofertas, tendencias actuales o la influencia de redes sociales.</p>
+                </div>
+
+                <!-- Chart 3: Motivo Principal -->
+                <div class="bg-white p-6 rounded-2xl card-shadow border border-gray-100">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-semibold text-gray-800 text-base"><i class="fa-solid fa-bullseye text-ecoGreen mr-2"></i>Motivo Principal de Compra</h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="chart3"></canvas>
+                    </div>
+                    <p style="text-align: center;">Compara si la adquisición de indumentaria responde a una necesidad funcional real, al deseo de estar a la moda o a una combinación de ambos factores.</p>
+                </div>
+
+                <!-- Chart 4: Calidad vs Cantidad -->
+                <div class="bg-white p-6 rounded-2xl card-shadow border border-gray-100">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-semibold text-gray-800 text-base"><i class="fa-solid fa-scale-balanced text-ecoGreen mr-2"></i>Preferencia: Calidad vs. Cantidad</h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="chart4"></canvas>
+                    </div>
+                    <p style="text-align: center;">Refleja la inclinación del consumidor entre priorizar pocas prendas de durabilidad alta o acumular un mayor volumen de ropa de uso limitado.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- BLOCK 2: Uso, Reparación y Cultura del Desecho -->
+        <section class="space-y-4 pt-4">
+            <div class="flex items-center gap-3 border-b border-gray-200 pb-3">
+                <span class="w-3 h-8 bg-ecoTerracotta rounded-full"></span>
+                <div>
+                    <h2 class="text-xl font-bold text-gray-900">Bloque 2: Uso, Reparación y Cultura del Desecho</h2>
+                    <p class="text-xs text-gray-900">Durabilidad estimada, ropa sin estrenar, destino final y arreglos de prendas.</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Chart 5: Ciclo de Uso Estimado -->
+                <div class="bg-white p-6 rounded-2xl card-shadow border border-gray-100 md:col-span-2">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-semibold text-gray-800 text-base"><i class="fa-solid fa-rotate text-ecoTerracotta mr-2"></i>Ciclo de Uso Estimado por Prenda</h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="chart5"></canvas>
+                    </div>
+                    <p style="text-align: center;">Mide el promedio de puestas o usabilidad que los encuestados dan a sus prendas antes de descartarlas o dejarlas en el armario.</p>
+                </div>
+
+                <!-- Chart 6: Compras Sin Uso -->
+                <div class="bg-white p-6 rounded-2xl card-shadow border border-gray-100">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-semibold text-gray-800 text-base"><i class="fa-solid fa-box-open text-ecoTerracotta mr-2"></i>Compras Acumuladas Sin Uso</h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="chart6"></canvas>
+                    </div>
+                    <p style="text-align: center;">Muestra el porcentaje de personas que poseen prendas guardadas en el guardarropa que nunca han sido estrenadas.</p>
+                </div>
+
+                <!-- Chart 7: Cultura de Reparación -->
+                <div class="bg-white p-6 rounded-2xl card-shadow border border-gray-100">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-semibold text-gray-800 text-base"><i class="fa-solid fa-scissors text-ecoTerracotta mr-2"></i>Cultura de Reparación de Prendas</h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="chart7"></canvas>
+                    </div>
+                    <p style="text-align: center;">Evalúa la disposición a reparar o arreglar ropa dañada frente a las opciones de usarla rota o desecharla directamente.</p>
+                </div>
+
+                <!-- Chart 8: Destino de Prendas -->
+                <div class="bg-white p-6 rounded-2xl card-shadow border border-gray-100">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-semibold text-gray-800 text-base"><i class="fa-solid fa-hand-holding-heart text-ecoTerracotta mr-2"></i>Destino de Prendas en Desuso</h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="chart8"></canvas>
+                    </div>
+                    <p style="text-align: center;">Detalla las vías de disposición final más comunes para la ropa que ya no se utiliza, como donar, regalar, reutilizar o tirar.</p>
+                </div>
+
+                <!-- Chart 9: Descarte de Ropa en Buen Estado -->
+                <div class="bg-white p-6 rounded-2xl card-shadow border border-gray-100">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-semibold text-gray-800 text-base"><i class="fa-solid fa-trash-can text-ecoTerracotta mr-2"></i>Descarte de Ropa en Buen Estado</h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="chart9"></canvas>
+                    </div>
+                    <p style="text-align: center;">Proporción de encuestados que admite haber tirado a la basura prendas que aún se encontraban en buenas condiciones utilizables.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- BLOCK 3: Matriz de Conciencia Socioambiental y Emocional (Grid 2x2) -->
+        <section class="space-y-4 pt-4">
+            <div class="flex items-center gap-3 border-b border-gray-200 pb-3">
+                <span class="w-3 h-8 bg-ecoMustard rounded-full"></span>
+                <div>
+                    <h2 class="text-xl font-bold text-gray-900">Bloque 3: Matriz de Conciencia Socioambiental y Emocional</h2>
+                    <p class="text-xs text-gray-900">Grado de conocimiento de la comunidad sobre contaminación, recursos y presión social.</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Chart 10 -->
+                <div class="bg-white p-5 rounded-2xl card-shadow border border-gray-100 flex flex-col justify-between">
+                    <h3 class="font-semibold text-gray-800 text-sm text-center mb-2"><i class="fa-solid fa-earth-americas text-ecoGreen mr-1"></i>Conciencia Ambiental General</h3>
+                    <div class="chart-container">
+                        <canvas id="chart10"></canvas>
+                    </div>
+                    <p style="text-align: center;">Mide el interés y conocimiento general sobre el cuidado del medio ambiente.</p>
+                </div>
+
+                <!-- Chart 11 -->
+                <div class="bg-white p-5 rounded-2xl card-shadow border border-gray-100 flex flex-col justify-between">
+                    <h3 class="font-semibold text-gray-800 text-sm text-center mb-2"><i class="fa-solid fa-industry text-ecoGreen mr-1"></i>Contaminación de la Moda</h3>
+                    <div class="chart-container">
+                        <canvas id="chart11"></canvas>
+                    </div>
+                    <p style="text-align: center;">Muestra el nivel de información sobre el impacto ecológico de la industria textil.</p>
+                </div>
+
+                <!-- Chart 12 -->
+                <div class="bg-white p-5 rounded-2xl card-shadow border border-gray-100 flex flex-col justify-between">
+                    <h3 class="font-semibold text-gray-800 text-sm text-center mb-2"><i class="fa-solid fa-droplet text-blue-500 mr-1"></i>Conciencia Huella Hídrica</h3>
+                    <div class="chart-container">
+                        <canvas id="chart12"></canvas>
+                    </div>
+                    <p style="text-align: center;">Grado de conocimiento sobre el elevado consumo de agua en la fabricación de ropa.</p>
+                </div>
+
+                <!-- Chart 13 -->
+                <div class="bg-white p-5 rounded-2xl card-shadow border border-gray-100 flex flex-col justify-between">
+                    <h3 class="font-semibold text-gray-800 text-sm text-center mb-2"><i class="fa-solid fa-heart-crack text-ecoTerracotta mr-1"></i>Presión Social y Emocional</h3>
+                    <div class="chart-container">
+                        <canvas id="chart13"></canvas>
+                    </div>
+                    <p style="text-align: center;">Porcentaje de personas que sienten la necesidad de comprar ropa para encajar socialmente.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- BLOCK 4: Propensión al Cambio y Plan de Acción -->
+        <section class="space-y-4 pt-4">
+            <div class="flex items-center gap-3 border-b border-gray-200 pb-3">
+                <span class="w-3 h-8 bg-ecoGreen rounded-full"></span>
+                <div>
+                    <h2 class="text-xl font-bold text-gray-900">Bloque 4: Propensión al Cambio y Conclusión</h2>
+                    <p class="text-xs text-gray-900">Disposición a modificar hábitos de compra y recomendaciones estratégicas para la escuela.</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Chart 14: Disposición al cambio -->
+                <div class="bg-white p-6 rounded-2xl card-shadow border border-gray-100 lg:col-span-1">
+                    <h3 class="font-semibold text-gray-800 text-base mb-4"><i class="fa-solid fa-lightbulb text-ecoGreen mr-2"></i>Disposición a Cambiar Hábitos</h3>
+                    <div class="chart-container-lg">
+                        <canvas id="chart14"></canvas>
+                    </div>
+                    <p style="text-align: center;">Refleja el compromiso potencial de la comunidad para adoptar hábitos de consumo de vestimenta más sostenibles y responsables a futuro.</p>
+                </div>
+
+                <!-- Action Plan Card -->
+                <div class="bg-gradient-to-br from-ecoGreen to-ecoGreen-light text-white p-6 md:p-8 rounded-2xl card-shadow lg:col-span-2 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full font-medium uppercase tracking-wider">
+                                <i class="fa-solid fa-rocket mr-1"></i>Plan de Acción Escolar
+                            </span>
+                            <i class="fa-solid fa-seedling text-2xl text-white/80"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Compromiso de la Comunidad de 2º Año PAI</h3>
+                        <p class="text-white/90 text-sm leading-relaxed mb-6">
+                            A partir de los hallazgos del dashboard, proponemos tres iniciativas clave para transformar la conciencia ambiental en hábitos reales dentro de la escuela:
+                        </p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="bg-white/10 p-4 rounded-xl backdrop-blur-sm border border-white/10">
+                                <i class="fa-solid fa-arrows-rotate text-lg mb-2 text-ecoMustard"></i>
+                                <h4 class="font-bold text-sm mb-1">Feria del Trueque</h4>
+                                <p class="text-xs text-white/80">Intercambio de prendas en buen estado entre estudiantes para reducir el descarte directo.</p>
+                            </div>
+                            <div class="bg-white/10 p-4 rounded-xl backdrop-blur-sm border border-white/10">
+                                <i class="fa-solid fa-wrench text-lg mb-2 text-ecoMustard"></i>
+                                <h4 class="font-bold text-sm mb-1">Taller de Upcycling</h4>
+                                <p class="text-xs text-white/80">Enseñar técnicas básicas de costura y customización para reparar ropa con pequeños daños.</p>
+                            </div>
+                            <div class="bg-white/10 p-4 rounded-xl backdrop-blur-sm border border-white/10">
+                                <i class="fa-solid fa-faucet-drip text-lg mb-2 text-ecoMustard"></i>
+                                <h4 class="font-bold text-sm mb-1">Campaña Huella Hídrica</h4>
+                                <p class="text-xs text-white/80">Difusión de infografías sobre el consumo de agua por cada jeans y remera fabricada.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 pt-4 border-t border-white/20 flex flex-wrap justify-between items-center text-xs text-white/80">
+                        <span><i class="fa-solid fa-graduation-cap mr-1"></i>2º Año</span>
+                        <span><i class="fa-solid fa-chart-line mr-1"></i>Looker Studio Integration Ready</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-center text-xs text-gray-900 py-6">
+            <p>Digital Design - 2026</p>
+        </footer>
+
+    </div>
+
+    <script>
+        // Global Chart Instance Store
+        const chartInstances = {};
+
+        // Raw datasets for cohorts
+        const datasets = {
+            all: {
+                total: 120,
+                discardPct: '28%',
+                waterPct: '64%',
+                changePct: '78%',
+                q1: [15, 45, 35, 25], // Frecuencia: Semanal, Mensual, Semestral, Anual
+                q2: [40, 35, 30, 15], // Detonantes: Necesidad, Tendencias, Ofertas, Redes Sociales
+                q3: [42, 28, 50],     // Motivo: Necesidad, Moda, Ambas
+                q4: [75, 45],         // Calidad vs Cantidad: Buena Calidad/Poca Ropa vs Mucha Ropa/Poco Uso
+                q5: [60, 42, 18],     // Ciclo Uso: >30 veces, 10-30 veces, <10 veces
+                q6: [65, 55],         // Compras Sin Uso: Sí, No
+                q7: [58, 42, 20],     // Reparación: Arreglarla, Seguir usándola, Tirar y comprar
+                q8: [50, 32, 22, 11, 5], // Destino: Donar, Guardar, Regalar, Reutilizar, Tirar
+                q9: [34, 86],         // Descarte buen estado: Sí, No
+                q10: [78, 22, 20],    // Conciencia Ambiental: Sí, No, Tal vez
+                q11: [82, 18, 20],    // Contaminación Textil: Sí, No, Tal vez
+                q12: [77, 23, 20],    // Huella Hídrica: Sí, No, Tal vez
+                q13: [68, 32, 20],    // Presión Social: Sí, No, Tal vez
+                q14: [94, 14, 12]     // Disposición Cambio: Sí, No, Tal vez
+            },
+            frequent: {
+                total: 60,
+                discardPct: '38%',
+                waterPct: '58%',
+                changePct: '72%',
+                q1: [15, 45, 0, 0],
+                q2: [25, 25, 20, 10],
+                q3: [15, 20, 25],
+                q4: [30, 30],
+                q5: [20, 28, 12],
+                q6: [42, 18],
+                q7: [22, 26, 12],
+                q8: [20, 18, 12, 6, 4],
+                q9: [23, 37],
+                q10: [35, 15, 10],
+                q11: [38, 12, 10],
+                q12: [35, 15, 10],
+                q13: [40, 10, 10],
+                q14: [43, 9, 8]
+            },
+            infrequent: {
+                total: 60,
+                discardPct: '18%',
+                waterPct: '70%',
+                changePct: '84%',
+                q1: [0, 0, 35, 25],
+                q2: [15, 10, 10, 5],
+                q3: [27, 8, 25],
+                q4: [45, 15],
+                q5: [40, 14, 6],
+                q6: [23, 37],
+                q7: [36, 16, 8],
+                q8: [30, 14, 10, 5, 1],
+                q9: [11, 49],
+                q10: [43, 7, 10],
+                q11: [44, 6, 10],
+                q12: [42, 8, 10],
+                q13: [28, 22, 10],
+                q14: [51, 5, 4]
+            }
+        };
+
+        // Theme Palette Colors
+        const COLOR_GREEN = '#2D5A27';
+        const COLOR_GREEN_LIGHT = '#437F3B';
+        const COLOR_TERRACOTTA = '#C86D51';
+        const COLOR_MUSTARD = '#E6B800';
+        const COLOR_GRAY_SOFT = '#E2E8F0';
+
+        // Chart Initialization Functions
+        function initCharts() {
+            const data = datasets.all;
+
+            // Chart 1: Frecuencia de Compra
+            chartInstances.c1 = new Chart(document.getElementById('chart1'), {
+                type: 'bar',
+                data: {
+                    labels: ['Semanal', 'Mensual', 'Semestral', 'Anual'],
+                    datasets: [{
+                        data: data.q1,
+                        backgroundColor: COLOR_GREEN,
+                        borderRadius: 6
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+            });
+
+            // Chart 2: Factores Detonantes
+            chartInstances.c2 = new Chart(document.getElementById('chart2'), {
+                type: 'bar',
+                data: {
+                    labels: ['Necesidad', 'Tendencias', 'Ofertas', 'Redes Soc.'],
+                    datasets: [{
+                        data: data.q2,
+                        backgroundColor: COLOR_GREEN_LIGHT,
+                        borderRadius: 6
+                    }]
+                },
+                options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+            });
+
+            // Chart 3: Motivo Principal
+            chartInstances.c3 = new Chart(document.getElementById('chart3'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Necesidad', 'Moda', 'Ambas'],
+                    datasets: [{
+                        data: data.q3,
+                        backgroundColor: [COLOR_GREEN, COLOR_TERRACOTTA, COLOR_MUSTARD]
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
+            });
+
+            // Chart 4: Calidad vs Cantidad
+            chartInstances.c4 = new Chart(document.getElementById('chart4'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Poca ropa / Buena calidad', 'Mucha ropa / Poco uso'],
+                    datasets: [{
+                        data: data.q4,
+                        backgroundColor: [COLOR_GREEN, COLOR_TERRACOTTA]
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
+            });
+
+            // Chart 5: Ciclo de Uso
+            chartInstances.c5 = new Chart(document.getElementById('chart5'), {
+                type: 'bar',
+                data: {
+                    labels: ['> 30 veces', '10 a 30 veces', '< 10 veces'],
+                    datasets: [{
+                        data: data.q5,
+                        backgroundColor: [COLOR_GREEN, COLOR_MUSTARD, COLOR_TERRACOTTA],
+                        borderRadius: 6
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+            });
+
+            // Chart 6: Compras Sin Uso
+            chartInstances.c6 = new Chart(document.getElementById('chart6'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Sí', 'No'],
+                    datasets: [{
+                        data: data.q6,
+                        backgroundColor: [COLOR_TERRACOTTA, COLOR_GREEN]
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
+            });
+
+            // Chart 7: Cultura Reparación
+            chartInstances.c7 = new Chart(document.getElementById('chart7'), {
+                type: 'bar',
+                data: {
+                    labels: ['Arreglarla', 'Seguir usándola', 'Tirar y comprar'],
+                    datasets: [{
+                        data: data.q7,
+                        backgroundColor: [COLOR_GREEN, COLOR_MUSTARD, COLOR_TERRACOTTA],
+                        borderRadius: 6
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+            });
+
+            // Chart 8: Destino de Prendas
+            chartInstances.c8 = new Chart(document.getElementById('chart8'), {
+                type: 'bar',
+                data: {
+                    labels: ['Donar', 'Guardar', 'Regalar', 'Reutilizar', 'Tirar'],
+                    datasets: [{
+                        data: data.q8,
+                        backgroundColor: COLOR_TERRACOTTA,
+                        borderRadius: 6
+                    }]
+                },
+                options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+            });
+
+            // Chart 9: Descarte Ropa Buen Estado
+            chartInstances.c9 = new Chart(document.getElementById('chart9'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Sí (Tiró)', 'No (No tiró)'],
+                    datasets: [{
+                        data: data.q9,
+                        backgroundColor: [COLOR_TERRACOTTA, COLOR_GREEN]
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
+            });
+
+            // Helper for 2x2 Doughnuts
+            const doughnutMatrixOpt = { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 10 } } } } };
+
+            // Chart 10: Conciencia General
+            chartInstances.c10 = new Chart(document.getElementById('chart10'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Sí', 'No', 'Tal vez'],
+                    datasets: [{ data: data.q10, backgroundColor: [COLOR_GREEN, COLOR_TERRACOTTA, COLOR_MUSTARD] }]
+                },
+                options: doughnutMatrixOpt
+            });
+
+            // Chart 11: Contaminación Moda
+            chartInstances.c11 = new Chart(document.getElementById('chart11'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Sí', 'No', 'Tal vez'],
+                    datasets: [{ data: data.q11, backgroundColor: [COLOR_GREEN, COLOR_TERRACOTTA, COLOR_MUSTARD] }]
+                },
+                options: doughnutMatrixOpt
+            });
+
+            // Chart 12: Huella Hídrica
+            chartInstances.c12 = new Chart(document.getElementById('chart12'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Sí', 'No', 'Tal vez'],
+                    datasets: [{ data: data.q12, backgroundColor: [COLOR_GREEN, COLOR_TERRACOTTA, COLOR_MUSTARD] }]
+                },
+                options: doughnutMatrixOpt
+            });
+
+            // Chart 13: Presión Social
+            chartInstances.c13 = new Chart(document.getElementById('chart13'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Sí', 'No', 'Tal vez'],
+                    datasets: [{ data: data.q13, backgroundColor: [COLOR_GREEN, COLOR_TERRACOTTA, COLOR_MUSTARD] }]
+                },
+                options: doughnutMatrixOpt
+            });
+
+            // Chart 14: Disposición al Cambio
+            chartInstances.c14 = new Chart(document.getElementById('chart14'), {
+                type: 'pie',
+                data: {
+                    labels: ['Sí (Cambiaría)', 'No', 'Tal vez'],
+                    datasets: [{
+                        data: data.q14,
+                        backgroundColor: [COLOR_GREEN, COLOR_TERRACOTTA, COLOR_MUSTARD]
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
+            });
+        }
+
+        // Update Dashboard on Filter Change
+        function updateDashboardData() {
+            const selectedVal = document.getElementById('cohortFilter').value;
+            const data = datasets[selectedVal];
+
+            // Update top banner metrics
+            document.getElementById('statTotal').innerText = data.total;
+            document.getElementById('statDiscard').innerText = data.discardPct;
+            document.getElementById('statWater').innerText = data.waterPct;
+            document.getElementById('statChange').innerText = data.changePct;
+
+            // Update chart datasets
+            chartInstances.c1.data.datasets[0].data = data.q1;
+            chartInstances.c2.data.datasets[0].data = data.q2;
+            chartInstances.c3.data.datasets[0].data = data.q3;
+            chartInstances.c4.data.datasets[0].data = data.q4;
+            chartInstances.c5.data.datasets[0].data = data.q5;
+            chartInstances.c6.data.datasets[0].data = data.q6;
+            chartInstances.c7.data.datasets[0].data = data.q7;
+            chartInstances.c8.data.datasets[0].data = data.q8;
+            chartInstances.c9.data.datasets[0].data = data.q9;
+            chartInstances.c10.data.datasets[0].data = data.q10;
+            chartInstances.c11.data.datasets[0].data = data.q11;
+            chartInstances.c12.data.datasets[0].data = data.q12;
+            chartInstances.c13.data.datasets[0].data = data.q13;
+            chartInstances.c14.data.datasets[0].data = data.q14;
+
+            // Trigger updates
+            Object.values(chartInstances).forEach(chart => chart.update());
+        }
+
+        // Initialize on Window Load
+        window.onload = function() {
+            initCharts();
+        };
+    </script>
+</body>
+</html>

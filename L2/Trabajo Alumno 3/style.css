@@ -1,0 +1,106 @@
+img{
+    width: 20%;
+}
+.imagen6{
+    width: 70%;
+}
+
+.columnasFotos img{
+    width: 60%;
+    margin-left: 20%;
+}
+
+.columnasFotos img:hover{
+    width: 70%;
+    transition: 0.5s;
+}
+.columnasFotos{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.nivelesEducativos{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+
+.horarios{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+.bordes{
+    border: 1px rgb(26, 73, 134) solid;
+    border-radius: 50px;
+    margin: 40px;
+}
+h1{
+    background-color: rgb(26, 73, 134);
+    color: white;
+}
+
+h2{
+    background-color: rgb(39, 102, 185);
+    color: white;
+    width: 40%;
+    margin-left: 30%;
+}
+
+body{
+    text-align: center;
+    background-color: rgb(83, 148, 233);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.deportes{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr ;
+}
+
+.uniformes{
+        display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr ;
+    gap: 15px;
+    padding: 10px;
+}
+
+.uniformes li{
+    list-style: none;
+}
+.imagenes2 img{
+    width: 50%;
+}
+
+.columnasElementos{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+
+
+.columnasUniformes{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin-top: 10px;
+}
+.columnasUniformes img{
+    width: 60%;
+    margin-left: 20%;
+}
+.columnasUniformes h2{
+    width: 70%;
+    display: grid;
+    align-items: center;
+    margin: 15%;
+}
+
+
+a{
+    border: 2px solid  rgb(26, 73, 134);
+    color: white;
+    background-color:  rgb(32, 87, 160);
+    text-decoration: none;
+    padding: 20px;
+    margin-top: 100px;
+    border-radius: 20px;
+}

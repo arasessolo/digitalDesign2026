@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema del Rover - Trabajo de Alumno</title>
+    
+    <!-- Librerías para ejecutar Python en el navegador -->
+    <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css">
+    <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
+
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0f172a; color: #f8fafc; padding: 20px; }
+        
+        .header-volver { margin-bottom: 20px; }
+        .header-volver a { color: #38bdf8; text-decoration: none; font-weight: bold; }
+        .header-volver a:hover { text-decoration: underline; }
+
+        .contenedor { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 1400px; margin: 0 auto; }
+        @media (max-width: 900px) { .contenedor { grid-template-columns: 1fr; } }
+
+        .panel { background-color: #1e293b; border-radius: 8px; padding: 20px; border: 1px solid #334155; }
+        h2 { color: #38bdf8; margin-bottom: 15px; font-size: 1.2rem; }
+
+        /* Estilo para el código */
+        pre { background-color: #090d16; padding: 15px; border-radius: 6px; overflow-x: auto; color: #a5f3fc; font-family: 'Courier New', Courier, monospace; font-size: 0.85rem; height: 500px; }
+
+        /* Estilo para simular la consola */
+        .consola-box { background-color: #000000; color: #00ff66; padding: 15px; border-radius: 6px; font-family: 'Courier New', Courier, monospace; min-height: 500px; border: 1px solid #22c55e; }
+    </style>
+</head>
+<body>
+
+    <div class="header-volver">
+        <a href="../../index.html">← Volver a la Galería de Trabajos</a>
+    </div>
+
+    <div class="contenedor">
+        <!-- LADO IZQUIERDO: CÓDIGO FUENTE -->
+        <div class="panel">
+            <h2>📜 Código Python del Alumno</h2>
+            <pre><code>import random
+import time
+
+def analizar_densidad():
+    numero = random.randint(1, 100)
+    return numero
+
+def iniciar_escaneo():
+    resultado = analizar_densidad()
+    if resultado >= 50:
+        print("Densidad alta: Iniciando excavación")
+    else:
+        print("Densidad baja: Buscando otra zona.")
+
+iniciar_escaneo()
+        
+def perforar():
+    profundidad = 0
+    while profundidad <= 10:
+        profundidad = profundidad + 1
+        print("Perforando.. metros actuales:" + str(profundidad))
+        
+    print("Proceso de perforación finalizado")
+
+perforar()
+        
+def verificar_visibilidad():
+    cielo = input("Intruducir como esta el cielo (despejado o con tormenta): ")
+    return cielo
+
+def navegar_a_base():
+    kilometros_recorridos = 0 
+    objetivo = 3
+    print("Iniciando sistema de navegación automática...")
+    while kilometros_recorridos < objetivo:
+        respuesta_c = verificar_visibilidad()
+        if respuesta_c == "despejado":
+            kilometros_recorridos = kilometros_recorridos + 1
+            print("Avanzando…")
+            time.sleep(1)
+        else:
+            print("Tormenta detectada, esperando...")
+            time.sleep(1)
+    print("¡Misión cumplida! El Rover ha llegado a la base a salvo.")
+
+navegar_a_base()</code></pre>
+        </div>
+
+        <!-- LADO DERECHO: EJECUCIÓN EN VIVO -->
+        <div class="panel">
+            <h2>💻 Consola Interactiva (Ejecución en Vivo)</h2>
+            <div class="consola-box">
+                <!-- Código ejecutable por PyScript -->
+                <script type="py" terminal>
+import random
+import time
+
+def analizar_densidad():
+    numero = random.randint(1, 100)
+    return numero
+
+def iniciar_escaneo():
+    resultado = analizar_densidad()
+    if resultado >= 50:
+        print("Densidad alta: Iniciando excavación")
+    else:
+        print("Densidad baja: Buscando otra zona.")
+
+iniciar_escaneo()
+
+def perforar():
+    profundidad = 0
+    while profundidad <= 10:
+        profundidad = profundidad + 1
+        print("Perforando.. metros actuales:" + str(profundidad))
+        
+    print("Proceso de perforación finalizado")
+
+perforar()
+
+def verificar_visibilidad():
+    cielo = input("Intruducir como esta el cielo (despejado o con tormenta): ")
+    return cielo
+
+def navegar_a_base():
+    kilometros_recorridos = 0 
+    objetivo = 3
+    print("Iniciando sistema de navegación automática...")
+    while kilometros_recorridos < objetivo:
+        respuesta_c = verificar_visibilidad()
+        if respuesta_c == "despejado":
+            kilometros_recorridos = kilometros_recorridos + 1
+            print("Avanzando…")
+            time.sleep(0.5)
+        else:
+            print("Tormenta detectada, esperando...")
+            time.sleep(0.5)
+    print("¡Misión cumplida! El Rover ha llegado a la base a salvo.")
+
+navegar_a_base()
+                </script>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
